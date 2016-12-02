@@ -25,8 +25,9 @@ module.exports = {
 
           if(this.el.getAttribute("material")!==null
               && 'src' in this.el.getAttribute("material")
-              && document.querySelector(this.el.getAttribute("material").src)!== null
-              && document.querySelector(this.el.getAttribute("material").src).tagName === "VIDEO"){
+              && (this.el.getAttribute("material").src.tagName === "VIDEO"
+               || (document.querySelector(this.el.getAttribute("material").src)!== null
+                && document.querySelector(this.el.getAttribute("material").src).tagName === "VIDEO"))){
 
               this.material_is_a_video = true;
           }

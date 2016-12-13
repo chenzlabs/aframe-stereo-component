@@ -86,12 +86,6 @@
 	      },
 	       init: function(){
 
-	          // Flag to acknowledge if 'click' on video has been attached to canvas
-	          // Keep in mind that canvas is the last thing initialized on a scene so have to wait for the event
-	          // or just check in every tick if is not undefined
-
-	          this.video_click_event_added = false;
-
 	          this.material_is_a_video = false;
 
 	          // Check if material is a video from html tag (object3D.material.map instanceof THREE.VideoTexture does not
@@ -181,14 +175,6 @@
 	              object3D.geometry = new THREE.BufferGeometry().fromGeometry(geometry);
 
 	          }
-	          else{
-
-	              // No need to attach video click if not a sphere and not a video, set this to true
-
-	              this.video_click_event_added = true;
-
-	          }
-
 
 	       },
 
@@ -205,34 +191,6 @@
 	            else{
 	              object3D.layers.set(data.eye === 'left' ? 1:2);
 	            }
-
-	       },
-
-	       tick: function(time){
-
-	           // If this value is false, it means that (a) this is a video on a sphere [see init method]
-	           // and (b) of course, tick is not added
-
-	           if(!this.video_click_event_added){
-	                if(typeof(this.el.sceneEl.canvas) !== 'undefined'){
-
-	                   // Get video DOM
-
-	                   this.videoEl = this.el.object3D.children[0].material.map.image;
-
-	                   // On canvas click, play video element. Use self to not lose track of object into event handler
-
-	                   var self = this;
-
-	                   this.el.sceneEl.canvas.onclick = function () {
-	                      self.videoEl.play();
-	                   };
-
-	                   // Signal that click event is added
-	                   this.video_click_event_added = true;
-
-	                }
-	           }
 
 	       }
 	     },
